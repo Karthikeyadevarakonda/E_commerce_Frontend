@@ -18,7 +18,7 @@ const ProductsList = ({ filteredData, loading, error, value, setValue }) => {
     );
 
   return (
-    <div className="px-8">
+    <div className="px-8 h-[238vh] shadow overflow-y-auto rounded-md">
       <FilterButtons value={value} setValue={setValue} />
       <FilterInput value={value} setValue={setValue} />
 
