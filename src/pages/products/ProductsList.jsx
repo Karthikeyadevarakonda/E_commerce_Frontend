@@ -1,47 +1,25 @@
-import { useEffect, useState } from "react";
-import useApi from "../../utils/useApi";
 import ProductCard from "./ProductCard";
 import FilterButtons from "./FilterButtons";
 import FilterInput from "./FilterInput";
+import ClothesLoading from "./ClothesLoading";
+import NoProducts from "./NoProducts";
 
-const ProductsList = () => {
-  const {
-    data: products,
-    fetchData,
-    loading,
-    error,
-  } = useApi("http://localhost:7001/api/allProducts");
+const ProductsList = ({ filteredData, loading, error, value, setValue }) => {
+  if (loading)
+    return (
+      <div className="flex justify-center items-center w-full h-screen">
+        <ClothesLoading duration={2000} interval={200} />
+      </div>
+    );
 
-  const [value, setValue] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-
-  useEffect(() => {
-    fetchData("/");
-  }, []);
-
-  useEffect(() => {
-    if (products) {
-      setFilteredData(
-        products.filter(
-          (item) =>
-            item.productType.toLowerCase().includes(value) ||
-            item.brand.toLowerCase().includes(value) ||
-            item.gender.some((g) => g.toLowerCase().includes(value))
-        )
-      );
-    }
-  }, [value, products]);
-
-  if (loading) return <p className="text-center mt-10">Loading products...</p>;
   if (error)
     return (
       <p className="text-center mt-10 text-red-500">Error: {error.message}</p>
     );
 
   return (
-    <div className="p-8 ">
+    <div className="px-8">
       <FilterButtons value={value} setValue={setValue} />
-
       <FilterInput value={value} setValue={setValue} />
 
       {filteredData?.length > 0 ? (
@@ -51,7 +29,9 @@ const ProductsList = () => {
           ))}
         </div>
       ) : (
-        <p className="text-center mt-10">No products found.</p>
+        <p className="text-center mt-10">
+          <NoProducts />
+        </p>
       )}
     </div>
   );

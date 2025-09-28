@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { PiBabyBold, PiPantsLight, PiHoodieDuotone } from "react-icons/pi";
 import { RiShirtFill } from "react-icons/ri";
 import { GiSkirt } from "react-icons/gi";
-import { MdClear } from "react-icons/md"; // clear icon
+import { MdClear } from "react-icons/md";
 
 const filters = [
   { name: "men", icon: { type: "iconify", icon: "mdi:gender-male" } },
@@ -19,7 +19,7 @@ const filters = [
   { name: "skirt", icon: { type: "react", icon: GiSkirt } },
 ];
 
-export default function FilterButtons({ value, setValue }) {
+export default function FilterButtons({ value, setValue, clearFilter }) {
   return (
     <div className="flex flex-wrap gap-2 my-4">
       {filters.map((filter) => (
@@ -41,14 +41,9 @@ export default function FilterButtons({ value, setValue }) {
         </button>
       ))}
 
-      {/* Clear button */}
       <button
         onClick={() => setValue("")}
-        className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-colors duration-200 ${
-          value === ""
-            ? "bg-gray-800 text-white border-slate-200"
-            : "bg-white text-gray-700 border-gray-300"
-        }`}
+        className="flex items-center gap-2 px-3 py-1 rounded-full border bg-white text-gray-700 border-gray-300 transition-colors duration-200"
       >
         <MdClear size={18} /> CLEAR
       </button>

@@ -11,10 +11,16 @@ const ProductCard = ({ product: p }) => {
 
   return (
     <div className="hover:shadow-xl">
-      <div>
-        <img src={p.image} alt="" />
-      </div>
+      <div className="relative">
+        <img src={p.image} alt={p.name} className="w-full rounded" />
 
+        <p className="absolute bottom-3 left-3 flex items-center gap-2 bg-white/70 px-2 py-1 rounded text-sm font-medium">
+          <span className="flex items-center gap-1 ">
+            {p.rating} <FaStar color="green" />
+          </span>
+          <span className="text-gray-700">| {p.viewCount}</span>
+        </p>
+      </div>
       <div className="p-3 flex flex-col">
         <h3 className="text-sm sm:text-xl font-medium line-clamp-2">
           {p.brand}
@@ -23,7 +29,6 @@ const ProductCard = ({ product: p }) => {
           {p.productName}
         </p>
 
-        {/* Price */}
         <div className="flex items-center gap-2 mt-1">
           <span className="text-sm text-normal font-bold text-black">
             Rs. {getDiscountPrice(p.actualPrice, p.discount)}
