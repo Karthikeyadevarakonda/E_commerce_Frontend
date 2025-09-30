@@ -72,7 +72,6 @@ const ProductsPage = () => {
 
   return (
     <div className="p-4 flex flex-row">
-      {/* Only show sidebar if not loading */}
       {!loading && (
         <FilterSidebar
           filteredData={products || []}

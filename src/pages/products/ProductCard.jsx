@@ -1,16 +1,16 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 
 const ProductCard = ({ product: p }) => {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  //   const handleClick = () => navigate(`/product/${product.id}`);
+  const handleClick = () => navigate(`/product/${p.id}`);
 
   const getDiscountPrice = (actualPrice, discount) =>
     Math.round(actualPrice * (1 - discount / 100));
 
   return (
-    <div className="hover:shadow-xl">
+    <div className="hover:shadow-xl" onClick={handleClick}>
       <div className="relative">
         <img src={p.image} alt={p.name} className="w-full rounded" />
 

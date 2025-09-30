@@ -78,7 +78,6 @@ const FilterSidebar = ({
         <hr className="my-4 text-gray-300" />
       </section>
 
-      {/* PRICE */}
       <section>
         <h2 className="font-medium text-gray-700 mb-2">PRICE</h2>
         <div className="flex flex-col gap-2">

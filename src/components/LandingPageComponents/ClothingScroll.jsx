@@ -26,7 +26,7 @@ export default function ClothingScroll() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-8">
+    <section className="py-8 sm:py-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -35,7 +35,7 @@ export default function ClothingScroll() {
           transition={{ duration: 0.8 }}
           className="text-center mb-6"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-500">
+          <h2 className="text-2xl font-bold text-slate-500">
             Clothing Collection
           </h2>
         </motion.div>
@@ -52,13 +52,13 @@ export default function ClothingScroll() {
                 key={`${item.name}-${index}`}
                 className="flex-shrink-0"
               >
-                <div className="w-20 h-20 sm:w-28 sm:h-28 bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center hover:shadow-xl hover:-translate-y-1 transition-transform duration-300">
-                  <div className="w-10 h-10 sm:w-16 sm:h-16 flex items-center justify-center mb-1 sm:mb-2">
+                <div className="w-20 h-20 sm:w-20 sm:h-20 bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center hover:shadow-xl hover:-translate-y-1 transition-transform duration-300">
+                  <div className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center mb-1 sm:mb-2">
                     {React.cloneElement(item.icon, {
                       className: `w-full h-full ${item.color}`,
                     })}
                   </div>
-                  <div className="text-xs sm:text-sm font-medium text-gray-700 text-center truncate px-2">
+                  <div className="text-xs sm:text-xs font-medium text-gray-700 text-center truncate px-2">
                     {item.name}
                   </div>
                 </div>

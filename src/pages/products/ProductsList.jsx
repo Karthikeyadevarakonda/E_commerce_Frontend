@@ -29,9 +29,9 @@ const ProductsList = ({ filteredData, loading, error, value, setValue }) => {
           ))}
         </div>
       ) : (
-        <p className="text-center mt-10">
+        <div className="text-center mt-10">
           <NoProducts />
-        </p>
+        </div>
       )}
     </div>
   );
