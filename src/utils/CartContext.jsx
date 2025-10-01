@@ -1,17 +1,18 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
+// 1️⃣ Create context
 const CartContext = createContext();
 
+// 2️⃣ Custom hook for easier usage
 export const useCart = () => useContext(CartContext);
 
+// 3️⃣ Provider component
 export const CartProvider = ({ children }) => {
-  // Load cart from localStorage initially
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem("cart");
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -61,9 +62,14 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, decreaseQuantity }}
+      value={{ cart, addToCart, removeFromCart, decreaseQuantity, clearCart }}
     >
       {children}
     </CartContext.Provider>

@@ -13,7 +13,7 @@ const CartComponent = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
 
-  if (cart.length === 0) return <EmptyCart />;
+  if (cart.length === 0 && currentStep !== 4) return <EmptyCart />;
 
   const totalMRP = cart.reduce(
     (acc, item) => acc + item.actualPrice * item.quantity,
@@ -29,12 +29,13 @@ const CartComponent = () => {
   return (
     <div className="max-w-6xl mx-auto p-6 flex flex-col md:flex-row gap-6">
       <div className="flex-1 space-y-4">
-        <StepsHeader currentStep={currentStep} />
+        {currentStep !== 4 && <StepsHeader currentStep={currentStep} />}
 
         {currentStep === 1 && (
           <div className="bg-white p-4 rounded-lg shadow space-y-4 overflow-y-auto h-[600px]">
             {cart.map((item) => (
               <CartList
+                key={`${item.id}-${item.size}`}
                 item={item}
                 addToCart={addToCart}
                 decreaseQuantity={decreaseQuantity}
@@ -44,7 +45,7 @@ const CartComponent = () => {
           </div>
         )}
 
-        {currentStep === 2 && <Address />}
+        {currentStep === 2 && <Address setCurrentStep={setCurrentStep} />}
 
         {currentStep === 3 && <Payment />}
       </div>

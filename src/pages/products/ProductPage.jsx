@@ -29,30 +29,43 @@ const ProductsPage = () => {
 
     let filtered = [...products];
 
-    if (selectedBrands.length)
-      filtered = filtered.filter((p) => selectedBrands.includes(p.brand));
+    // Case-insensitive brand filtering
+    if (selectedBrands.length) {
+      const lowerSelectedBrands = selectedBrands.map((b) => b.toLowerCase());
+      filtered = filtered.filter((p) =>
+        lowerSelectedBrands.includes(p.brand?.toLowerCase())
+      );
+    }
 
-    if (selectedColors.length)
-      filtered = filtered.filter((p) => selectedColors.includes(p.colour));
+    // Case-insensitive color filtering (optional)
+    if (selectedColors.length) {
+      const lowerSelectedColors = selectedColors.map((c) => c.toLowerCase());
+      filtered = filtered.filter((p) =>
+        lowerSelectedColors.includes(p.colour?.toLowerCase())
+      );
+    }
 
+    // Category filtering (already enums, usually uppercase)
     if (selectedCategories.length)
       filtered = filtered.filter((p) =>
         selectedCategories.includes(p.productType)
       );
 
+    // Discount filter
     if (selectedDiscount)
       filtered = filtered.filter((p) => p.discount >= selectedDiscount);
 
+    // Price range filter
     if (priceRange)
       filtered = filtered.filter(
         (p) => p.actualPrice >= priceRange[0] && p.actualPrice <= priceRange[1]
       );
 
+    // Search/filter by text input
     if (value)
       filtered = filtered.filter(
         (p) =>
           p.brand?.toLowerCase().includes(value.toLowerCase()) ||
-          false ||
           (typeof p.productType === "string" &&
             p.productType.toLowerCase() === value.toLowerCase()) ||
           (Array.isArray(p.gender) &&

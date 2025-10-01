@@ -23,3 +23,14 @@
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb, #f1f1f138) var(--scrollbar-track, #efefef50);
 }
+
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+.animate-\[shake_0\.3s_ease-in-out\] {
+  animation: shake 0.3s ease-in-out;
+}
