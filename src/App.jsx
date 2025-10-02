@@ -1,39 +1,94 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import LandingPage from "./pages/LandingPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
-import RegisterPage from "./pages/RegisterPage.jsx";
-import ProductPage from "./pages/products/ProductPage.jsx";
-import EachProduct from "./pages/products/EachProduct.jsx";
-import { CartProvider } from "./utils/CartContext.jsx";
-import CartComponent from "./pages/products/CartComponent.jsx";
-import { AddressProvider } from "./utils/AddressContext.jsx";
-import { PaymentProvider } from "./utils/PaymentContext.jsx";
-import Page from "./pages/admin/addProduct/Page.jsx";
-import Metrics from "./pages/admin/dashboard/Metrics.jsx";
-import MetricsPage from "./pages/admin/MetricPage.jsx";
-import AddProductPage from "./pages/admin/AddProductPage.jsx";
+import { AuthProvider } from "./utils/AuthContext";
+import ProtectedRoute from "./utils/ProtectedRoute";
+
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import EachProduct from "./pages/products/EachProduct";
+import CartComponent from "./pages/products/CartComponent";
+import MetricsPage from "./pages/admin/MetricPage";
+import AddProductPage from "./pages/admin/AddProductPage";
+import GuestRoute from "./utils/GuestRoute";
+import { CartProvider } from "./utils/CartContext";
+import { AddressProvider } from "./utils/AddressContext";
+import { PaymentProvider } from "./utils/PaymentContext";
+import ProductsPage from "./pages/products/ProductPage";
+import Profile from "./pages/Profile";
+import AdminOrders from "./pages/admin/AdminOrders";
 
 const App = () => {
   return (
     <CartProvider>
       <AddressProvider>
         <PaymentProvider>
-          <Router>
-            <Toaster position="top-right" reverseOrder={false} />
+          <AuthProvider>
+            <Router>
+              <Toaster position="top-right" reverseOrder={false} />
+              <Routes>
+                <Route index element={<LandingPage />} />
 
-            <Routes>
-              <Route index element={<LandingPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/products" element={<ProductPage />} />
-              <Route path="/product/:id" element={<EachProduct />} />
-              <Route path="/cart" element={<CartComponent />} />
-              <Route path="/admin/metrics" element={<MetricsPage />} />
+                <Route
+                  path="/login"
+                  element={
+                    <GuestRoute>
+                      <LoginPage />
+                    </GuestRoute>
+                  }
+                />
+                <Route
+                  path="/register"
+                  element={
+                    <GuestRoute>
+                      <RegisterPage />
+                    </GuestRoute>
+                  }
+                />
 
-              <Route path="/admin/products" element={<AddProductPage />} />
-            </Routes>
-          </Router>
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute roles={["USER", "ADMIN"]}>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* User Protected */}
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/product/:id" element={<EachProduct />} />
+                <Route path="/cart" element={<CartComponent />} />
+
+                {/* Admin Only */}
+                <Route
+                  path="/admin/metrics"
+                  element={
+                    <ProtectedRoute roles={["ADMIN"]}>
+                      <MetricsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/products"
+                  element={
+                    <ProtectedRoute roles={["ADMIN"]}>
+                      <AddProductPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/admin/orders"
+                  element={
+                    <ProtectedRoute roles={["ADMIN"]}>
+                      <AdminOrders />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </Router>
+          </AuthProvider>
         </PaymentProvider>
       </AddressProvider>
     </CartProvider>

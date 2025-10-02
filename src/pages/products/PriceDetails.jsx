@@ -4,6 +4,7 @@ import useApi from "../../utils/useApi";
 import { useNavigate } from "react-router-dom";
 import { usePayment } from "../../utils/PaymentContext";
 import { useCart } from "../../utils/CartContext";
+import { useAuth } from "../../utils/AuthContext"; // auth
 import OrderSuccessPage from "./OrderSuccessPage";
 
 const PriceDetails = ({
@@ -18,11 +19,18 @@ const PriceDetails = ({
   const navigate = useNavigate();
   const { paymentMethod } = usePayment();
   const { clearCart } = useCart();
+  const { user } = useAuth(); // logged-in user
 
-  // 🔥 For shake animation
   const [shake, setShake] = useState(false);
 
   const placeOrder = async () => {
+    // 🔹 Redirect unauthenticated user to login
+    if (!user) {
+      toast.error("❌ Login to place an order!");
+      navigate("/login");
+      return;
+    }
+
     if (cart.length === 0) {
       toast.error("Cart is empty!");
       return;
@@ -34,7 +42,7 @@ const PriceDetails = ({
     }));
 
     const res = await postData("/api/orders", {
-      userId: "cmfwakt5l0000ft3wyxpssmcz",
+      userId: user.id, // use actual logged-in user id
       items,
       status: "pending",
     });
@@ -42,7 +50,6 @@ const PriceDetails = ({
     if (res) {
       toast.success("🎉 Order placed successfully!");
       setCurrentStep(4);
-
       clearCart();
       localStorage.removeItem("address");
     } else {
@@ -50,7 +57,6 @@ const PriceDetails = ({
     }
   };
 
-  // ✅ Check if address is filled in localStorage
   const isAddressFilled = () => {
     const savedAddress = JSON.parse(localStorage.getItem("address") || "{}");
     return (
@@ -63,19 +69,17 @@ const PriceDetails = ({
   };
 
   const handleNext = () => {
-    // ✅ Step 2: Check address before payment
     if (currentStep === 2) {
       if (!isAddressFilled()) {
         toast.error(
           "❌ Please fill in your shipping address before proceeding!"
         );
         setShake(true);
-        setTimeout(() => setShake(false), 500); // remove shake after animation
+        setTimeout(() => setShake(false), 500);
         return;
       }
     }
 
-    // ✅ Step 3: Check payment before placing order
     if (currentStep === 3) {
       if (!paymentMethod) {
         toast.error("❌ Please complete payment details before placing order!");
@@ -116,7 +120,7 @@ const PriceDetails = ({
           </>
         )}
 
-        {/* ✅ Navigation Buttons */}
+        {/* Navigation Buttons */}
         <div className="flex justify-between gap-2 mt-4">
           {currentStep > 1 && currentStep < 4 && (
             <button

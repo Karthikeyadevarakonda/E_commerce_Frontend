@@ -3,8 +3,11 @@ import Lady from "../../assets/lady.png";
 import Men from "../../assets/men.png";
 import { Link } from "react-router-dom";
 import ClothingScroll from "./ClothingScroll";
+import { useAuth } from "../../utils/AuthContext"; // import AuthContext
 
 const Body = () => {
+  const { user } = useAuth(); // get the current user
+
   return (
     <section className="relative min-h-screen flex flex-col items-center bg-gradient-to-r from-pink-50 to-gray-50 overflow-hidden pt-10 sm:pt-10 lg:pt-2">
       <div className="max-w-5xl text-center relative z-20 px-4">
@@ -24,12 +27,30 @@ const Body = () => {
           >
             Explore Fashion
           </Link>
-          <Link
-            to={"/login"}
-            className="px-8 py-3 border border-black text-black rounded-md shadow hover:bg-gray-100 transition text-sm sm:text-base"
-          >
-            SIGN IN
-          </Link>
+
+          {/* Dynamic button */}
+          {!user ? (
+            <Link
+              to={"/login"}
+              className="px-8 py-3 border border-black text-black rounded-md shadow hover:bg-gray-100 transition text-sm sm:text-base"
+            >
+              SIGN IN
+            </Link>
+          ) : user.role === "ADMIN" ? (
+            <Link
+              to={"/admin/metrics"}
+              className="px-8 py-3 border border-black text-black rounded-md shadow hover:bg-gray-100 transition text-sm sm:text-base"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <Link
+              to={"/profile"}
+              className="px-8 py-3 border border-black text-black rounded-md shadow hover:bg-gray-100 transition text-sm sm:text-base"
+            >
+              Profile
+            </Link>
+          )}
         </div>
       </div>
 

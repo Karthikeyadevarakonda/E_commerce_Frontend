@@ -1,26 +1,26 @@
-import React, { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo } from "react";
+import ReactECharts from "echarts-for-react";
 import {
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ComposedChart,
-  Area,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from "recharts";
+  FaRupeeSign,
+  FaShoppingCart,
+  FaBoxOpen,
+  FaTruckLoading,
+} from "react-icons/fa";
 import useApi from "../../../utils/useApi";
+import ShimmerMetrics from "./ShimmerMetrics";
 
-const COLORS = ["#00C49F", "#FFBB28", "#FF8042", "#8884d8", "#A569BD"];
+const COLORS = ["#60A5FA", "#34D399", "#FBBF24", "#F87171", "#A78BFA"];
 
-// Memoized KPI Card
-const KpiCard = memo(({ title, value }) => (
-  <div className="bg-white/80 p-6 rounded-xl shadow flex flex-col backdrop-blur-md">
-    <p className="text-sm text-gray-500">{title}</p>
-    <p className="text-2xl font-bold">{value}</p>
+const KpiCard = memo(({ title, value, icon: Icon }) => (
+  <div className="bg-white py-8 px-4 rounded-xl shadow-md flex items-center gap-3 hover:shadow-lg transition-transform hover:scale-[1.02]">
+    <div className="p-3 rounded-full bg-slate-100 text-slate-600 text-xl">
+      <Icon />
+    </div>
+    <div>
+      <p className="text-sm text-gray-500">{title}</p> {/* smaller title */}
+      <p className="text-xl font-bold text-gray-800">{value}</p>{" "}
+      {/* smaller value */}
+    </div>
   </div>
 ));
 
@@ -38,14 +38,8 @@ const Metrics = () => {
     loadMetrics();
   }, []);
 
-  if (loading || !metrics)
-    return (
-      <div className="flex justify-center items-center h-96 text-gray-500">
-        Loading Metrics...
-      </div>
-    );
+  if (loading || !metrics) return <ShimmerMetrics />;
 
-  // Safe number conversions
   const totalRevenue = Number(metrics.totalRevenue || 0);
   const totalOrders = Number(metrics.totalOrders || 0);
   const totalProducts = Number(metrics.totalProducts || 0);
@@ -54,127 +48,123 @@ const Metrics = () => {
     .filter((o) => o.status.toLowerCase() !== "completed")
     .reduce((sum, o) => sum + Number(o.count || 0), 0);
 
-  const pieData = metrics.ordersByStatus.map((status) => ({
-    name: status.status,
-    value: Number(status.count || 0),
-  }));
-
   const topProductData = metrics.topProducts.map((p) => ({
     name: p.productName,
     sold: Number(p.quantitySold || 0),
     revenue: Number(p.price || 100) * Number(p.quantitySold || 0),
   }));
 
-  // Precompute chart cells to reduce re-renders
-  const orderStatusCells = pieData.map((_, idx) => (
-    <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
-  ));
+  // --- Top Products Vertical Bar Chart ---
+  const topProductsOption = {
+    tooltip: {
+      trigger: "axis",
+      formatter: (params) => {
+        const p = params[0];
+        const data = topProductData[p.dataIndex];
+        return `${data.name}<br/>Sold: ${data.sold}<br/>Revenue: ₹${data.revenue}`;
+      },
+    },
+    xAxis: {
+      type: "category",
+      data: topProductData.map((d) => d.name),
+      axisLabel: { rotate: 0, interval: 0, fontSize: 12 },
+    },
+    yAxis: { type: "value" },
+    series: [
+      {
+        type: "bar",
+        data: topProductData.map((d, idx) => ({
+          value: d.sold,
+          itemStyle: { color: COLORS[idx % COLORS.length] },
+        })),
+        barWidth: 70,
+      },
+    ],
+  };
 
-  const revenueCells = topProductData.map((_, idx) => (
-    <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
-  ));
+  // --- Revenue Sparkline ---
+  const revenueTrendOption = {
+    tooltip: { trigger: "axis" },
+    xAxis: {
+      type: "category",
+      data: topProductData.map((d) => d.name),
+      show: false,
+    },
+    yAxis: { type: "value", show: false },
+    grid: { left: 0, right: 0, top: 0, bottom: 0 },
+    series: [
+      {
+        type: "line",
+        smooth: true,
+        data: topProductData.map((d) => d.revenue),
+        lineStyle: { color: "#34D399", width: 2 },
+        areaStyle: { color: "rgba(52,211,153,0.3)" },
+      },
+    ],
+  };
 
   return (
     <div className="space-y-8 p-6 max-w-7xl mx-auto">
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <KpiCard title="Total Revenue" value={`₹${totalRevenue.toFixed(2)}`} />
-        <KpiCard title="Total Orders" value={totalOrders} />
-        <KpiCard title="Total Products" value={totalProducts} />
-        <KpiCard title="Pending Delivery" value={pendingDelivery} />
+        <KpiCard
+          title="Total Revenue"
+          value={`₹${totalRevenue.toFixed(2)}`}
+          icon={FaRupeeSign}
+        />
+        <KpiCard
+          title="Total Orders"
+          value={totalOrders}
+          icon={FaShoppingCart}
+        />
+        <KpiCard
+          title="Total Products"
+          value={totalProducts}
+          icon={FaBoxOpen}
+        />
+        <KpiCard
+          title="Pending Delivery"
+          value={pendingDelivery}
+          icon={FaTruckLoading}
+        />
       </div>
 
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Order Status Pie */}
-        <div className="bg-white/80 p-6 rounded-xl shadow flex flex-col items-center backdrop-blur-md">
-          <h3 className="font-semibold text-gray-700 mb-4">Order Status</h3>
-          <div style={{ width: "100%", height: 250 }}>
-            <ResponsiveContainer>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  dataKey="value"
-                  nameKey="name"
-                  innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={5}
-                >
-                  {orderStatusCells}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Top Products Composed Chart */}
-        <div className="bg-white/80 p-6 rounded-xl shadow backdrop-blur-md">
-          <h3 className="font-semibold text-gray-700 mb-4 text-center">
-            Top Products
-          </h3>
-          <div style={{ width: "100%", height: 250 }}>
-            <ResponsiveContainer>
-              <ComposedChart data={topProductData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip formatter={(value) => `₹${value}`} />
-                <Bar dataKey="sold" fill="#FF8042" />
-                <Area dataKey="revenue" fill="#00C49F" stroke="#00C49F" />
-              </ComposedChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Revenue Pie by Top Products */}
-        <div className="bg-white/80 p-6 rounded-xl shadow flex flex-col items-center backdrop-blur-md">
-          <h3 className="font-semibold text-gray-700 mb-4">
-            Revenue by Top Products
-          </h3>
-          <div style={{ width: "100%", height: 250 }}>
-            <ResponsiveContainer>
-              <PieChart>
-                <Pie
-                  data={topProductData.map((p) => ({
-                    name: p.name,
-                    value: p.revenue,
-                  }))}
-                  dataKey="value"
-                  nameKey="name"
-                  innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={5}
-                >
-                  {revenueCells}
-                </Pie>
-                <Tooltip formatter={(value) => `₹${value.toFixed(2)}`} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+      {/* Top Products Bar Chart */}
+      <div className="bg-white p-6 rounded-xl shadow-sm">
+        <h3 className="text-gray-700 font-semibold mb-4">Top Products Sold</h3>
+        <ReactECharts option={topProductsOption} style={{ height: 300 }} />
       </div>
 
-      {/* Top Products Horizontal Scroll */}
-      <div className="bg-white/80 p-6 rounded-xl shadow backdrop-blur-md">
-        <h3 className="font-semibold text-gray-700 mb-4">Top Products</h3>
-        <div className="flex gap-4 overflow-x-auto pb-2">
+      {/* Revenue Trend Sparkline */}
+      <div className="bg-white p-6 rounded-xl shadow-sm">
+        <h3 className="text-gray-700 font-semibold mb-4">Revenue Trend</h3>
+        <ReactECharts option={revenueTrendOption} style={{ height: 100 }} />
+      </div>
+
+      {/* Scrollable Product Cards */}
+      <div className="bg-white/90 p-6 rounded-xl shadow">
+        <h3 className="flex items-center gap-2 font-semibold text-gray-700 mb-4">
+          <FaBoxOpen /> Top Products
+        </h3>
+        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
           {metrics.topProducts.map((product) => (
             <div
               key={product.productId}
-              className="min-w-[140px] bg-gray-50/70 rounded-xl shadow p-4 flex flex-col items-center"
+              className="min-w-[180px] bg-slate-50/80 rounded-xl shadow p-4 flex flex-col items-center hover:scale-105 transition-transform"
             >
               <img
                 src={product.image}
                 alt={product.productName}
-                className="h-24 w-24 object-cover rounded-md mb-2"
+                className="h-28 w-28 object-cover rounded-md mb-2"
               />
               <p className="font-medium text-gray-800 text-center">
                 {product.productName}
               </p>
               <p className="text-sm text-gray-500">{product.productType}</p>
-              <p className="text-pink-500 font-semibold mt-1">
-                Sold: {Number(product.quantitySold || 0)}
+              <p className="text-slate-700 font-semibold mt-1">
+                Sold: {Number(product.quantitySold || 0)} | Revenue: ₹
+                {Number(product.price || 100) *
+                  Number(product.quantitySold || 0)}
               </p>
             </div>
           ))}
