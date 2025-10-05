@@ -26,7 +26,7 @@ export default function ClothingScroll() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-8 sm:py-0">
+    <section className="pb-8 sm:py-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
