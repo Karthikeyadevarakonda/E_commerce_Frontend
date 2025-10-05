@@ -9,14 +9,14 @@ const Body = () => {
   const { user } = useAuth();
 
   return (
-    <section className="relative flex flex-col items-center justify-between min-h-screen bg-gradient-to-r from-pink-50 to-gray-50 overflow-hidden pt-20 sm:pt-10 lg:pt-2 2xl:pt-20">
+    <section className="relative flex flex-col items-center bg-gradient-to-r from-pink-50 to-gray-50 overflow-hidden pt-16 sm:pt-10 lg:pt-2 2xl:pt-20 min-h-screen">
       {/* Main Content */}
       <div className="max-w-5xl text-center relative z-20 px-4">
-        <h1 className="text-[34px] xs:text-[40px] sm:text-[70px] lg:text-[140px] xl:text-[150px] font-extrabold tracking-widest text-pink-200 uppercase leading-tight">
+        <h1 className="text-[34px] sm:text-[70px] lg:text-[140px] xl:text-[150px] font-extrabold tracking-widest text-pink-200 uppercase leading-tight">
           TrendCart
         </h1>
 
-        <p className="mt-4 sm:mt-6 text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 sm:mt-6 text-sm sm:text-lg md:text-xl lg:text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
           The smoothest and most stylish way to shop, discover, and express your
           fashion identity online.
         </p>
@@ -56,8 +56,8 @@ const Body = () => {
       </div>
 
       {/* Clothing Scroll Section */}
-      <div className="relative w-full flex justify-center mt-10 sm:mt-12 lg:mt-16 z-10">
-        <div className="relative w-[90%] xs:w-[95%] sm:w-[600px] lg:w-[650px] overflow-hidden rounded-full">
+      <div className="relative w-full flex justify-center mt-6 sm:mt-10 lg:mt-16 z-10 mb-6 sm:mb-0">
+        <div className="relative w-[90%] sm:w-[600px] lg:w-[650px] overflow-hidden rounded-full">
           <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-pink-50 via-pink-50 to-transparent z-20"></div>
           <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-pink-50 via-pink-50 to-transparent z-20"></div>
           <ClothingScroll />
@@ -93,6 +93,7 @@ const Body = () => {
         }}
       />
 
+      {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-gray-50 z-0"></div>
     </section>
   );
