@@ -77,7 +77,7 @@ const EachProduct = () => {
 
   return (
     <>
-      <div className="max-w-6xl mx-auto py-6 px-12 relative">
+      <div className="max-w-6xl mx-auto py-6 px-12 2xl:px-2 2xl:py-24 relative">
         {/* Top-left Back button */}
         <button
           onClick={() => navigate(-1)}
