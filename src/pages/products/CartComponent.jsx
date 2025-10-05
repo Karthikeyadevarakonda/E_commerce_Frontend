@@ -27,7 +27,7 @@ const CartComponent = () => {
   const totalAmount = totalMRP - totalDiscount + 20;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 flex flex-col md:flex-row gap-6">
+    <div className="max-w-6xl mx-auto sm:p-6 flex flex-col md:flex-row gap-6">
       <div className="flex-1 space-y-4">
         {currentStep !== 4 && <StepsHeader currentStep={currentStep} />}
 

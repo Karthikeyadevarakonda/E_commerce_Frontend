@@ -81,7 +81,7 @@ const EachProduct = () => {
         {/* Top-left Back button */}
         <button
           onClick={() => navigate(-1)}
-          className="absolute top-4 left-2 sm:top-6 sm:left-3 text-pink-400 hover:text-pink-500"
+          className="absolute top-4 left-4 sm:top-6 sm:left-3 text-pink-400 hover:text-pink-500"
         >
           <FaArrowLeft size={24} />
         </button>
@@ -89,7 +89,7 @@ const EachProduct = () => {
         {/* Top-right Cart icon */}
         <button
           onClick={() => navigate("/cart")}
-          className="absolute top-4 right-2 sm:top-6 sm:right-6 text-pink-400 hover:text-pink-500"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 text-pink-400 hover:text-pink-500"
         >
           <FaShoppingCart size={24} />
         </button>
