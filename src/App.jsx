@@ -24,8 +24,19 @@ const App = () => {
       <AddressProvider>
         <PaymentProvider>
           <AuthProvider>
+            {/* ✅ Keep Toaster OUTSIDE Router */}
+            <Toaster
+              position="top-center"
+              reverseOrder={false}
+              toastOptions={{
+                duration: 2500,
+                style: {
+                  zIndex: 9999,
+                },
+              }}
+            />
+
             <Router>
-              <Toaster position="top-right" reverseOrder={false} />
               <Routes>
                 <Route index element={<LandingPage />} />
 

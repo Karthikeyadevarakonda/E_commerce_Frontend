@@ -31,7 +31,7 @@ const Address = ({ setCurrentStep }) => {
   };
 
   return (
-    <div className="bg-gray-50 p-6 rounded-2xl shadow-lg max-w-3xl mx-auto">
+    <div className="sm:bg-gray-50 p-4 sm:p-6 sm:rounded-2xl sm:shadow-lg max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">
         Shipping Address
       </h2>
@@ -126,7 +126,7 @@ const Address = ({ setCurrentStep }) => {
         {/* Save Button */}
         <button
           type="submit"
-          className="w-full bg-pink-500 text-white p-3 rounded-xl font-semibold hover:bg-pink-600 transition"
+          className="w-full bg-pink-500 text-white p-3 rounded sm:rounded-xl font-semibold hover:bg-pink-600 transition"
         >
           Save Address
         </button>

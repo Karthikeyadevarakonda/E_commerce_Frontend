@@ -33,7 +33,7 @@ const Payment = () => {
   };
 
   return (
-    <div className="bg-gray-50 p-6 rounded-2xl shadow-lg max-w-3xl mx-auto">
+    <div className="sm:bg-gray-50 p-4 sm:p-6 sm:rounded-2xl sm:shadow-lg max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Payment Details</h2>
 
       {/* Card Form (always visible as default option) */}
