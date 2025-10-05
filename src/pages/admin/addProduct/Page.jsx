@@ -62,17 +62,14 @@ const Page = () => {
     setForm({
       ...initialFormState,
       ...product,
-      // Ensure gender and sizes are arrays; labels too
       gender: Array.isArray(product.gender) ? product.gender : [],
       sizes: Array.isArray(product.sizes) ? product.sizes : [],
       labels: Array.isArray(product.labels) ? product.labels : [],
     });
-
     setEditingId(product.id);
     setSidebarOpen(true);
   };
 
-  // Delete product
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       const res = await deleteData(`/${id}`);
@@ -82,22 +79,23 @@ const Page = () => {
     }
   };
 
-  // Reset form
   const handleReset = () => {
     setForm(initialFormState);
     setEditingId(null);
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8 relative">
+    <div className="max-w-7xl mx-auto sm:p-6 space-y-8 relative">
       {/* Products Table with integrated Add button */}
-      <ProductTable
-        products={products}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-        handleReset={handleReset}
-        setSidebarOpen={setSidebarOpen}
-      />
+      <div className="overflow-x-auto sm:overflow-x-visible">
+        <ProductTable
+          products={products}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          handleReset={handleReset}
+          setSidebarOpen={setSidebarOpen}
+        />
+      </div>
 
       {/* Sidebar Form */}
       <AnimatePresence>
@@ -107,9 +105,9 @@ const Page = () => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-0 right-0 h-full w-full md:w-2/5 bg-white shadow-xl z-50 p-6 overflow-y-auto"
+            className="fixed top-0 right-0 h-full w-full sm:w-2/5 bg-white shadow-xl z-50 p-4 sm:p-6 overflow-y-auto"
           >
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-4 sm:mb-6">
               <button
                 onClick={() => setSidebarOpen(false)}
                 className="text-gray-500 hover:text-gray-700 text-2xl font-bold"

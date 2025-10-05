@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { FaEdit, FaTrash, FaSortUp, FaSortDown } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -15,7 +15,6 @@ const ProductTable = ({
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Filtering
   const filteredProducts = useMemo(() => {
     if (!searchQuery) return products;
     const q = searchQuery.toLowerCase();
@@ -57,10 +56,10 @@ const ProductTable = ({
   };
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow">
+    <div className="sm:p-6 sm:bg-white sm:rounded-xl sm:shadow">
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-3">
-        <div>
+        <div className="w-full md:w-auto">
           <h2 className="text-lg font-semibold">All Products</h2>
           <p className="text-sm text-gray-500">
             A list of all products with details like name, brand, price and
@@ -69,11 +68,11 @@ const ProductTable = ({
         </div>
 
         {/* Search + Add Button */}
-        <div className="flex items-center gap-3 w-full md:w-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           <input
             type="text"
             placeholder="Search products..."
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-pink-300 flex-1 md:flex-none"
+            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-pink-300 flex-1 min-w-0"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -82,7 +81,7 @@ const ProductTable = ({
               handleReset();
               setSidebarOpen(true);
             }}
-            className="bg-pink-500 text-white px-4 py-2 rounded-md shadow hover:bg-pink-600 transition text-sm whitespace-nowrap"
+            className="bg-pink-500 text-white px-4 py-2 rounded-md shadow hover:bg-pink-600 transition text-sm whitespace-nowrap flex-shrink-0"
           >
             Add Product
           </button>
@@ -91,12 +90,12 @@ const ProductTable = ({
 
       {/* Table */}
       <div className="overflow-x-auto rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50 text-gray-600 text-sm font-medium">
+        <table className="min-w-full divide-y divide-gray-200 text-sm">
+          <thead className="bg-gray-50 text-gray-600 font-medium">
             <tr>
-              <th className="px-6 py-3 text-left">Product</th>
+              <th className="px-3 py-2 text-left">Product</th>
               <th
-                className="px-6 py-3 text-left cursor-pointer"
+                className="px-3 py-2 text-left cursor-pointer whitespace-nowrap"
                 onClick={() => requestSort("brand")}
               >
                 Brand{" "}
@@ -108,7 +107,7 @@ const ProductTable = ({
                   ))}
               </th>
               <th
-                className="px-6 py-3 text-left cursor-pointer"
+                className="px-3 py-2 text-left cursor-pointer whitespace-nowrap"
                 onClick={() => requestSort("actualPrice")}
               >
                 Price{" "}
@@ -119,9 +118,9 @@ const ProductTable = ({
                     <FaSortDown className="inline" />
                   ))}
               </th>
-              <th className="px-6 py-3 text-left">Discount</th>
-              <th className="px-6 py-3 text-left">Sizes</th>
-              <th className="px-6 py-3 text-left">Actions</th>
+              <th className="px-3 py-3 text-left">Discount</th>
+              <th className="px-3 py-3 text-left">Sizes</th>
+              <th className="px-3 py-3 text-left">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -133,34 +132,37 @@ const ProductTable = ({
                   animate={{ opacity: 1, y: 0 }}
                   className="hover:bg-gray-50 transition"
                 >
-                  <td className="px-6 py-4 flex items-center">
+                  <td className="px-3 py-4 sm:py-2 flex items-center min-w-[150px]">
                     {product.image ? (
                       <img
                         src={product.image}
                         alt={product.productName}
-                        className="h-10 w-10 rounded-md object-cover"
+                        className="h-full w-16 rounded-md object-cover flex-shrink-0"
                       />
                     ) : (
-                      <div className="h-10 w-10 bg-gray-200 rounded-md flex items-center justify-center text-gray-400 text-xs">
+                      <div className="h-10 w-10 bg-gray-200 rounded-md flex items-center justify-center text-gray-400 text-xs flex-shrink-0">
                         N/A
                       </div>
                     )}
-                    <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">
+                    <div className="ml-4 truncate">
+                      <div className="text-sm font-medium text-gray-900 truncate">
                         {product.productName}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 truncate">
                         {product.productType}
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
+
+                  <td className="px-3  py-4 sm:py-2 text-sm text-gray-700 whitespace-nowrap">
                     {product.brand}
                   </td>
-                  <td className="px-6 py-4 text-sm font-semibold text-green-600">
+
+                  <td className="px-3  py-4 sm:py-2 text-sm font-semibold text-green-600 whitespace-nowrap">
                     ₹{product.actualPrice}
                   </td>
-                  <td className="px-6 py-4 text-sm">
+
+                  <td className="px-3  py-4 sm:py-2 text-sm whitespace-nowrap">
                     {product.discount ? (
                       <span className="text-pink-600 font-medium">
                         {product.discount}%
@@ -169,19 +171,21 @@ const ProductTable = ({
                       "—"
                     )}
                   </td>
-                  <td className="px-6 py-4">
-                    <div className="flex flex-wrap gap-1">
+
+                  <td className="px-3  py-4 sm:py-2">
+                    <div className="flex flex-row gap-1">
                       {product.sizes.map((s) => (
                         <span
                           key={s}
-                          className="px-2 py-1 text-xs bg-gray-100 rounded-md text-gray-600"
+                          className="px-2 py-1 text-xs bg-gray-100 rounded-md text-gray-600 whitespace-nowrap"
                         >
                           {s}
                         </span>
                       ))}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-lg flex gap-3">
+
+                  <td className="px-3  py-4 sm:py-2 text-lg flex gap-2 flex-wrap items-center">
                     <button
                       onClick={() => handleEdit(product)}
                       className="text-black/80"
@@ -201,7 +205,7 @@ const ProductTable = ({
               <tr>
                 <td
                   colSpan="6"
-                  className="px-6 py-4 text-center text-gray-500 text-sm"
+                  className="px-3 py-4 text-center text-gray-500 text-sm"
                 >
                   No products found.
                 </td>
@@ -213,34 +217,47 @@ const ProductTable = ({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center mt-6 gap-2">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-3 py-1 border rounded-md text-sm hover:bg-gray-100 disabled:opacity-50"
-          >
-            Prev
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
+        <div className="mt-6">
+          <div className="flex items-center justify-center gap-2 overflow-x-auto px-2">
+            {/* Prev Button */}
             <button
-              key={i}
-              onClick={() => setCurrentPage(i + 1)}
-              className={`px-3 py-1 border border-gray-300 rounded-md text-sm ${
-                currentPage === i + 1
-                  ? "bg-gray-500 text-white"
-                  : "hover:bg-gray-100"
-              }`}
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1 border rounded-md text-sm hover:bg-gray-100 disabled:opacity-50 flex-shrink-0"
             >
-              {i + 1}
+              Prev
             </button>
-          ))}
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            className="px-3 py-1 border border-gray-500 rounded-md text-sm hover:bg-gray-100 disabled:opacity-50"
-          >
-            Next
-          </button>
+
+            {/* Page Numbers */}
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+              // Mobile: only show previous, current, next page
+              const isMobile = window.innerWidth < 640; // sm breakpoint
+              if (isMobile && Math.abs(page - currentPage) > 1) return null;
+
+              return (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`px-3 py-1 border border-gray-300 rounded-md text-sm flex-shrink-0 ${
+                    currentPage === page
+                      ? "bg-gray-500 text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  {page}
+                </button>
+              );
+            })}
+
+            {/* Next Button */}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 border border-gray-500 rounded-md text-sm hover:bg-gray-100 disabled:opacity-50 flex-shrink-0"
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
     </div>

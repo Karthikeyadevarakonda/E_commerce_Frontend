@@ -319,7 +319,7 @@ const ProductForm = ({
             disabled={loading}
             className="flex-1 bg-pink-500 text-white py-2.5 px-4 rounded-md font-semibold text-sm shadow hover:bg-pink-600 transition disabled:opacity-50"
           >
-            {editingId ? "Update Product" : "Add Product"}
+            {editingId ? "Update " : "Add "}
           </button>
           <button
             type="button"

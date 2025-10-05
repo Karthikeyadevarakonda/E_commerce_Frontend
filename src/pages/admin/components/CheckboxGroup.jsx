@@ -41,7 +41,7 @@ const CheckboxGroup = ({ label, options = [], selected = [], setSelected }) => {
               key={`${opt}-${idx}`}
               type="button"
               onClick={() => toggle(opt)}
-              className={`px-3 py-1 rounded-full text-sm font-medium border transition
+              className={`px-3 py-1 rounded sm:rounded-full text-sm font-medium border transition
                 ${
                   isSelected
                     ? "bg-pink-500 text-white border-pink-500 shadow-sm"

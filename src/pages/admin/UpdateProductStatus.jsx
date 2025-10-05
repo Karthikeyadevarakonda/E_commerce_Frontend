@@ -54,7 +54,7 @@ const UpdateProductStatus = ({ refreshMetrics }) => {
   };
 
   return (
-    <div className="p-6 min-h-screen">
+    <div className="sm:p-6 min-h-screen">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Manage Orders</h2>
 
       {loading && <p>Loading orders...</p>}
