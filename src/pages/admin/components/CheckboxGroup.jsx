@@ -1,16 +1,25 @@
-// src/components/ui/CheckboxGroup.jsx
 import { useCallback } from "react";
 
 const CheckboxGroup = ({ label, options = [], selected = [], setSelected }) => {
+  // Ensure selected is always an array of strings
+  const normalizedSelected = Array.isArray(selected)
+    ? selected.map((v) => String(v).toUpperCase())
+    : [];
+
   const toggle = useCallback(
     (value) => {
-      setSelected((prevSelected) =>
-        prevSelected.includes(value)
-          ? prevSelected.filter((v) => v !== value)
-          : [...prevSelected, value]
-      );
+      const valUpper = String(value).toUpperCase();
+      const newSelected = normalizedSelected.includes(valUpper)
+        ? normalizedSelected.filter((v) => v !== valUpper)
+        : [...normalizedSelected, valUpper];
+
+      console.log(`[${label}] Toggled:`, valUpper);
+      console.log(`[${label}] Previous selected:`, normalizedSelected);
+      console.log(`[${label}] New selected:`, newSelected);
+
+      setSelected(newSelected);
     },
-    [setSelected]
+    [setSelected, normalizedSelected, label]
   );
 
   return (
@@ -18,7 +27,15 @@ const CheckboxGroup = ({ label, options = [], selected = [], setSelected }) => {
       <label className="font-semibold text-gray-700 mb-2 block">{label}</label>
       <div className="flex flex-wrap gap-2">
         {options.map((opt, idx) => {
-          const isSelected = selected.includes(opt);
+          const optUpper = String(opt).toUpperCase();
+          const isSelected = normalizedSelected.includes(optUpper);
+          console.log(
+            `[${label}] Rendering option:`,
+            opt,
+            "Selected:",
+            isSelected
+          );
+
           return (
             <button
               key={`${opt}-${idx}`}

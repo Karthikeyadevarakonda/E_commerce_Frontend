@@ -1,4 +1,3 @@
-// src/components/admin/ProductForm.jsx
 import React, { useState } from "react";
 import Dropdown from "../components/Dropdown";
 import CheckboxGroup from "../components/CheckboxGroup";
@@ -237,9 +236,10 @@ const ProductForm = ({
         <CheckboxGroup
           label="Gender"
           options={GENDERS}
-          selected={Array.isArray(form.gender) ? form.gender : []}
+          selected={form.gender} // pass directly
           setSelected={(vals) => setForm({ ...form, gender: vals })}
         />
+
         {errors.gender && (
           <p className="text-xs text-red-600">{errors.gender}</p>
         )}
@@ -248,7 +248,7 @@ const ProductForm = ({
         <CheckboxGroup
           label="Sizes"
           options={SIZES}
-          selected={Array.isArray(form.sizes) ? form.sizes : []}
+          selected={form.sizes} // pass directly
           setSelected={(vals) => setForm({ ...form, sizes: vals })}
         />
         {errors.sizes && <p className="text-xs text-red-600">{errors.sizes}</p>}

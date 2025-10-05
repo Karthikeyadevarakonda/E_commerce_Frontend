@@ -58,9 +58,16 @@ const Page = () => {
     }
   };
 
-  // Edit product
   const handleEdit = (product) => {
-    setForm(product);
+    setForm({
+      ...initialFormState,
+      ...product,
+      // Ensure gender and sizes are arrays; labels too
+      gender: Array.isArray(product.gender) ? product.gender : [],
+      sizes: Array.isArray(product.sizes) ? product.sizes : [],
+      labels: Array.isArray(product.labels) ? product.labels : [],
+    });
+
     setEditingId(product.id);
     setSidebarOpen(true);
   };
