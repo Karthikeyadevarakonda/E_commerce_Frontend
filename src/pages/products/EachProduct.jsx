@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useApi from "../../utils/useApi";
 import { Heart } from "lucide-react";
+import { FaArrowLeft, FaShoppingCart } from "react-icons/fa";
 import Footer from "../../components/LandingPageComponents/Footer";
 import ClothesLoading from "./ClothesLoading";
 import { useCart } from "../../utils/CartContext";
@@ -76,7 +77,23 @@ const EachProduct = () => {
 
   return (
     <>
-      <div className="max-w-6xl mx-auto py-6 px-12">
+      <div className="max-w-6xl mx-auto py-6 px-12 relative">
+        {/* Top-left Back button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-6 left-3 text-pink-400 hover:text-pink-500"
+        >
+          <FaArrowLeft size={24} />
+        </button>
+
+        {/* Top-right Cart icon */}
+        <button
+          onClick={() => navigate("/cart")}
+          className="absolute top-6 right-6 text-pink-400 hover:text-pink-500"
+        >
+          <FaShoppingCart size={24} />
+        </button>
+
         {/* Breadcrumbs */}
         <div className="text-sm text-gray-500 mb-4">
           Home / {product.productType} /{" "}
