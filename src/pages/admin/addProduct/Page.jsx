@@ -22,7 +22,7 @@ const initialFormState = {
 
 const Page = () => {
   const { data, fetchData, postData, putData, deleteData, loading } = useApi(
-    "http://localhost:7001/api/allProducts"
+    `${import.meta.env.VITE_BASE_URL}/api/allProducts`
   );
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState(initialFormState);
@@ -39,14 +39,14 @@ const Page = () => {
   }, []);
 
   // Add / Update product
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (payload, e, editingId) => {
     e.preventDefault();
     try {
       if (editingId) {
-        const res = await putData(`/${editingId}`, form);
+        const res = await putData(`/${editingId}`, payload);
         if (res) toast.success("Product updated successfully!");
       } else {
-        const res = await postData("/", form);
+        const res = await postData("/", payload);
         if (res) toast.success("Product added successfully!");
       }
       const refreshed = await fetchData("/");

@@ -9,7 +9,7 @@ const ProductsPage = () => {
     fetchData,
     loading,
     error,
-  } = useApi("http://localhost:7001/api/allProducts");
+  } = useApi(`${import.meta.env.VITE_BASE_URL}/api/allProducts`);
 
   const [value, setValue] = useState("");
   const [filteredData, setFilteredData] = useState([]);

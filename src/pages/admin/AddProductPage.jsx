@@ -1,4 +1,4 @@
-// src/pages/admin/AddProductPage.jsx
+
 import DashboardLayout from "./DashboardLayout.jsx";
 import Page from "./addProduct/Page.jsx";
 

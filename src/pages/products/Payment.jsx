@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Gpay from "../../assets/google-pay.png";
 import payTm from "../../assets/paytm.svg";
 import { usePayment } from "../../utils/PaymentContext";

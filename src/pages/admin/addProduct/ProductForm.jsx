@@ -165,7 +165,10 @@ const ProductForm = ({
         </p>
       </div>
 
-      <form className="flex flex-col gap-4" onSubmit={onSubmitInternal}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={(e) => onSubmitInternal(e)}
+      >
         {/* Product Name */}
         <div>
           <label className="font-semibold text-gray-700 mb-1 block">
@@ -279,19 +282,16 @@ const ProductForm = ({
           </label>
           <input
             type="text"
-            value={
-              Array.isArray(form.labels)
-                ? form.labels.join(", ")
-                : form.labels ?? ""
-            }
-            onChange={(e) =>
-              setForm({
-                ...form,
-                labels: e.target.value
+            value={form.labelsInput ?? form.labels?.join(", ") ?? ""}
+            onChange={(e) => setForm({ ...form, labelsInput: e.target.value })}
+            onBlur={() =>
+              setForm((prev) => ({
+                ...prev,
+                labels: (prev.labelsInput || "")
                   .split(",")
                   .map((v) => v.trim())
                   .filter(Boolean),
-              })
+              }))
             }
             placeholder="e.g., casual, new, trending"
             className="w-full border border-gray-500 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-700"

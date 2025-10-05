@@ -18,7 +18,7 @@ const UpdateProductStatus = () => {
     data: orders,
     loading,
     error,
-  } = useApi("http://localhost:7001/api/orders");
+  } = useApi(`${import.meta.env.VITE_BASE_URL}/api/orders`);
 
   const [updating, setUpdating] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null); // for modal
@@ -88,7 +88,7 @@ const UpdateProductStatus = () => {
                 <td className="p-3 min-w-[180px]">
                   <Dropdown
                     label=""
-                    options={["PENDING", "SHIPPED", "DELIVERED", "CANCELLED"]}
+                    options={["PENDING", "SHIPPED", "DELIVERED", "CANCELED"]}
                     value={order.status}
                     setValue={(val) => handleStatusChange(order.id, val)}
                     className="text-sm w-full"

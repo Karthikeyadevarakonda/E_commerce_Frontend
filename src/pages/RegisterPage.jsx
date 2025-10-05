@@ -6,7 +6,7 @@ import useApi from "../utils/useApi";
 import { useAuth } from "../utils/AuthContext";
 
 const RegisterPage = () => {
-  const { postData } = useApi("http://localhost:7001");
+  const { postData } = useApi(import.meta.env.VITE_BASE_URL);
   const { login } = useAuth();
   const navigate = useNavigate();
 

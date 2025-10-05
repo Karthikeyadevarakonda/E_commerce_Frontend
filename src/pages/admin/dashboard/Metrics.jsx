@@ -26,7 +26,7 @@ const KpiCard = memo(({ title, value, icon: Icon }) => (
 
 const Metrics = () => {
   const { fetchData, loading } = useApi(
-    "http://localhost:7001/api/admin/metrics"
+    `${import.meta.env.VITE_BASE_URL}/api/admin/metrics`
   );
   const [metrics, setMetrics] = useState(null);
 

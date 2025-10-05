@@ -15,7 +15,7 @@ const PriceDetails = ({
   currentStep,
   setCurrentStep,
 }) => {
-  const { postData, loading } = useApi("http://localhost:7001");
+  const { postData, loading } = useApi(import.meta.env.VITE_BASE_URL);
   const navigate = useNavigate();
   const { paymentMethod } = usePayment();
   const { clearCart } = useCart();
