@@ -103,13 +103,13 @@ const EachProduct = () => {
         </div>
 
         <div className="flex flex-col md:flex-row justify-evenly gap-6 md:gap-0">
-          <div className="md:w-1/3 w-full flex flex-col gap-4">
+          <div className="w-full md:w-1/3  flex flex-col gap-4">
             {/* Product Image */}
             <div className="w-full rounded overflow-hidden flex">
               <img
                 src={product.image}
                 alt={product.productName}
-                className="w-full h-[250px] sm:h-[300px] md:h-[450px] sm:p-2 transition-transform duration-300 object-contain"
+                className="w-full h-[340px] rounded sm:h-[300px] md:h-[450px] sm:p-2 transition-transform duration-300 object-contain"
               />
             </div>
 
