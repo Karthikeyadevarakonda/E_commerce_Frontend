@@ -121,11 +121,12 @@ const PriceDetails = ({
         )}
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between gap-2 mt-4">
+        {/* Navigation Buttons */}
+        <div className="flex justify-between gap-2 mt-4 flex-col sm:flex-row">
           {currentStep > 1 && currentStep < 4 && (
             <button
               onClick={() => setCurrentStep((prev) => prev - 1)}
-              className="flex-1 bg-gray-300 text-black py-3 rounded font-semibold hover:bg-gray-400 transition"
+              className="flex-1 bg-gray-300 text-black py-2 sm:py-3 text-sm sm:text-base rounded font-semibold hover:bg-gray-400 transition"
             >
               Back
             </button>
@@ -139,7 +140,7 @@ const PriceDetails = ({
                 currentStep === 3
                   ? "bg-green-500 hover:bg-green-600"
                   : "bg-pink-500 hover:bg-pink-600"
-              } text-white py-3 rounded font-semibold transition ${
+              } text-white py-2 sm:py-3 text-sm sm:text-base rounded font-semibold transition ${
                 shake ? "animate-[shake_0.3s_ease-in-out]" : ""
               }`}
             >
