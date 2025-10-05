@@ -18,12 +18,12 @@ const ProductsList = ({ filteredData, loading, error, value, setValue }) => {
     );
 
   return (
-    <div className="px-8 h-[238vh] shadow overflow-y-auto rounded-md">
+    <div className=" px-0.5 sm:px-8 h-[238vh] shadow overflow-y-auto rounded-md">
       <FilterButtons value={value} setValue={setValue} />
       <FilterInput value={value} setValue={setValue} />
 
       {filteredData?.length > 0 ? (
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-1 sm:gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
           {filteredData.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

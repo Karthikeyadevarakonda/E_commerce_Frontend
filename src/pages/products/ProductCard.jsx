@@ -10,36 +10,53 @@ const ProductCard = ({ product: p }) => {
     Math.round(actualPrice * (1 - discount / 100));
 
   return (
-    <div className="hover:shadow-xl" onClick={handleClick}>
+    <div
+      className="hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+      onClick={handleClick}
+    >
+      {/* IMAGE */}
       <div className="relative">
-        <img src={p.image} alt={p.name} className="w-full rounded" />
+        <img
+          src={p.image}
+          alt={p.name}
+          className="w-full sm:rounded object-cover"
+        />
 
-        <p className="absolute bottom-3 left-3 flex items-center gap-2 bg-white/70 px-2 py-1 rounded text-sm font-medium">
-          <span className="flex items-center gap-1 ">
-            {p.rating} <FaStar color="green" />
+        <p className="absolute bottom-2 left-2 flex items-center gap-1 bg-white/70 px-1.5 py-0.5 rounded text-[10px] sm:text-sm font-medium">
+          <span className="flex items-center gap-0.5">
+            {p.rating} <FaStar color="green" size={10} />
           </span>
-          <span className="text-gray-700">| {p.viewCount}</span>
+          <span className="text-gray-700 text-[10px] sm:text-sm">
+            | {p.viewCount}
+          </span>
         </p>
       </div>
-      <div className="p-3 flex flex-col">
-        <h3 className="text-sm sm:text-xl font-medium line-clamp-2">
+
+      {/* TEXT CONTENT */}
+      <div className="p-2 sm:p-3 flex flex-col">
+        {/* Brand name */}
+        <h3 className="text-xs sm:text-lg font-medium truncate sm:line-clamp-2">
           {p.brand}
         </h3>
-        <p className="text-xs sm:text-base text-gray-500 truncate">
+
+        {/* Product name */}
+        <p className="text-[10px] sm:text-sm text-gray-500 truncate sm:whitespace-normal sm:line-clamp-2">
           {p.productName}
         </p>
 
-        <div className="flex items-center gap-2 mt-1">
-          <span className="text-sm text-normal font-bold text-black">
+        {/* Price + Discount */}
+        <div className="flex items-center gap-1 sm:gap-2 mt-1">
+          <span className="text-xs sm:text-base font-bold text-black truncate">
             Rs. {getDiscountPrice(p.actualPrice, p.discount)}
           </span>
+
           {p.discount > 0 && (
-            <span className="flex gap-2">
-              <span className="text-xs line-through text-gray-400">
+            <span className="flex gap-1 sm:gap-2 items-center truncate">
+              <span className="text-[10px] sm:text-xs line-through text-gray-400">
                 Rs. {p.actualPrice}
               </span>
-              <span className="text-xs text-amber-400">
-                {"( " + p.discount + " % OFF)"}
+              <span className="text-[10px] sm:text-xs text-amber-400">
+                ({p.discount}% OFF)
               </span>
             </span>
           )}

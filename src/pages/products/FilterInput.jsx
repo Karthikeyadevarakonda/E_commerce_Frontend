@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa"; // Using react-icons
+import { FaSearch } from "react-icons/fa";
 
 const FilterInput = ({ value, setValue }) => {
   const placeholders = [
@@ -24,7 +24,7 @@ const FilterInput = ({ value, setValue }) => {
   }, []);
 
   return (
-    <div className="my-4 relative">
+    <div className="my-4 mx-2 sm:mx-0 relative">
       <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
       <input
         onChange={(e) => setValue(e.target.value.toLowerCase().trim())}
