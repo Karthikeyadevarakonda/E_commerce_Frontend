@@ -21,7 +21,7 @@ const filters = [
 
 export default function FilterButtons({ value, setValue, clearFilter }) {
   return (
-    <div className="flex flex-wrap gap-2 my-4 mx-2 sm:mx-0">
+    <div className="flex overflow-x-auto sm:flex-wrap gap-2 my-4 mx-2 sm:mx-0">
       {filters.map((filter) => (
         <button
           key={filter.name}

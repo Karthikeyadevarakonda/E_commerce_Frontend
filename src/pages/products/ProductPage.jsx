@@ -2,7 +2,7 @@ import FilterSidebar from "./FilterSidebar";
 import ProductsList from "./ProductsList";
 import { useEffect, useState } from "react";
 import useApi from "../../utils/useApi";
-import { FiFilter } from "react-icons/fi";
+import { FiFilter, FiSearch } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 
 const ProductsPage = () => {
@@ -86,7 +86,7 @@ const ProductsPage = () => {
       {/* 🔹 Sidebar (desktop only) */}
       {!loading && (
         <div className="hidden lg:flex lg:flex-shrink-0">
-          <div className="w-72 ">
+          <div className="w-72">
             <FilterSidebar
               filteredData={products || []}
               selectedBrands={selectedBrands}
@@ -106,6 +106,20 @@ const ProductsPage = () => {
 
       {/* 🔹 Product List */}
       <div className="flex-1">
+        {/* ✅ Mobile search bar */}
+        <div className="lg:hidden px-4 pt-4 pb-2 sticky top-0 bg-white z-40 shadow-sm">
+          <div className="flex items-center border border-gray-300 rounded-md px-3 py-2">
+            <FiSearch className="text-gray-500 mr-2" size={18} />
+            <input
+              type="text"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Search products..."
+              className="w-full text-sm outline-none bg-transparent"
+            />
+          </div>
+        </div>
+
         <ProductsList
           filteredData={filteredData}
           loading={loading}
@@ -115,7 +129,7 @@ const ProductsPage = () => {
         />
       </div>
 
-      {/* 🔹 Floating Filter Button (mobile) */}
+      {/* 🔹 Floating Filter Button (mobile only) */}
       <button
         className="fixed bottom-6 right-6 bg-pink-500 text-white p-4 rounded-full shadow-lg lg:hidden z-50 hover:bg-pink-600 transition"
         onClick={() => setIsFilterOpen(true)}
@@ -150,6 +164,7 @@ const ProductsPage = () => {
             setPriceRange={setPriceRange}
           />
 
+          {/* ✅ Search button at bottom of overlay */}
           <button
             onClick={() => setIsFilterOpen(false)}
             className="w-full mt-6 bg-pink-500 text-white py-3 rounded-md font-medium hover:bg-pink-600 transition"
