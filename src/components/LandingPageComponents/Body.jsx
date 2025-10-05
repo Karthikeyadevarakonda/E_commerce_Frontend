@@ -56,7 +56,7 @@ const Body = () => {
       </div>
 
       {/* Clothing Scroll Section */}
-      <div className="relative w-full flex justify-center mt-6 sm:mt-10 lg:mt-16 z-10 mb-6 sm:mb-0">
+      <div className="relative w-full flex justify-center mt-10 sm:mt-10 lg:mt-10 z-10 mb-6 sm:mb-0">
         <div className="relative w-[90%] sm:w-[600px] lg:w-[650px] overflow-hidden rounded-full">
           <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-pink-50 via-pink-50 to-transparent z-20"></div>
           <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-pink-50 via-pink-50 to-transparent z-20"></div>
