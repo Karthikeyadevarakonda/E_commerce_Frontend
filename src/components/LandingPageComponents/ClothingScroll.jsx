@@ -35,7 +35,7 @@ export default function ClothingScroll() {
           transition={{ duration: 0.8 }}
           className="text-center mb-6"
         >
-          <h2 className="text-2xl font-bold text-slate-500">
+          <h2 className="text-lg sm:text-2xl font-bold text-slate-500">
             Clothing Collection
           </h2>
         </motion.div>

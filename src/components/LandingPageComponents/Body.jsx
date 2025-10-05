@@ -12,7 +12,7 @@ const Body = () => {
     <section className="relative flex flex-col items-center bg-gradient-to-r from-pink-50 to-gray-50 overflow-hidden pt-16 sm:pt-10 lg:pt-2 2xl:pt-20 min-h-screen">
       {/* Main Content */}
       <div className="max-w-5xl text-center relative z-20 px-4">
-        <h1 className="text-[34px] sm:text-[70px] lg:text-[140px] xl:text-[150px] font-extrabold tracking-widest text-pink-200 uppercase leading-tight">
+        <h1 className="text-[40px] sm:text-[70px] lg:text-[140px] xl:text-[150px] font-extrabold tracking-widest text-pink-200 uppercase leading-tight">
           TrendCart
         </h1>
 
