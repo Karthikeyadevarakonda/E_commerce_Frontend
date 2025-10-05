@@ -17,14 +17,13 @@ const KpiCard = memo(({ title, value, icon: Icon }) => (
       <Icon />
     </div>
     <div>
-      <p className="text-sm text-gray-500">{title}</p> {/* smaller title */}
-      <p className="text-xl font-bold text-gray-800">{value}</p>{" "}
-      {/* smaller value */}
+      <p className="text-sm text-gray-500">{title}</p>
+      <p className="text-xl font-bold text-gray-800">{value}</p>
     </div>
   </div>
 ));
 
-const Metrics = () => {
+const Metrics = ({ refreshKey }) => {
   const { fetchData, loading } = useApi(
     `${import.meta.env.VITE_BASE_URL}/api/admin/metrics`
   );
@@ -36,7 +35,7 @@ const Metrics = () => {
       if (res) setMetrics(res);
     };
     loadMetrics();
-  }, []);
+  }, [refreshKey]); // refetch whenever refreshKey changes
 
   if (loading || !metrics) return <ShimmerMetrics />;
 
@@ -45,7 +44,7 @@ const Metrics = () => {
   const totalProducts = Number(metrics.totalProducts || 0);
 
   const pendingDelivery = metrics.ordersByStatus
-    .filter((o) => o.status.toLowerCase() !== "completed")
+    .filter((o) => !["delivered", "canceled"].includes(o.status.toLowerCase()))
     .reduce((sum, o) => sum + Number(o.count || 0), 0);
 
   const topProductData = metrics.topProducts.map((p) => ({
@@ -54,7 +53,6 @@ const Metrics = () => {
     revenue: Number(p.price || 100) * Number(p.quantitySold || 0),
   }));
 
-  // --- Top Products Vertical Bar Chart ---
   const topProductsOption = {
     tooltip: {
       trigger: "axis",
@@ -82,7 +80,6 @@ const Metrics = () => {
     ],
   };
 
-  // --- Revenue Sparkline ---
   const revenueTrendOption = {
     tooltip: { trigger: "axis" },
     xAxis: {

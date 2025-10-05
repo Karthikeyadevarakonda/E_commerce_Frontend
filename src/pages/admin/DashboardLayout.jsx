@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Home, Box, Menu, LogOut } from "lucide-react";
 import { FaUser, FaClipboardList } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ const DashboardLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
-  const { logout, user } = useAuth(); // 👈 make sure user object has role
+  const { logout, user } = useAuth();
 
   const menuItems = [
     { name: "Dashboard", icon: <Home size={20} />, path: "/admin/metrics" },
@@ -16,7 +16,6 @@ const DashboardLayout = ({ children }) => {
     { name: "Profile", icon: <FaUser size={20} />, path: "/profile" },
   ];
 
-  // 👇 only admins can see "Orders"
   if (user?.role === "ADMIN") {
     menuItems.splice(2, 0, {
       name: "Orders",

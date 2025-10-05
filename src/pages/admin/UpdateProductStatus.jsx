@@ -1,4 +1,3 @@
-// pages/admin/UpdateProductStatus.jsx
 import React, { useEffect, useState } from "react";
 import {
   FaBoxOpen,
@@ -11,7 +10,20 @@ import {
 import useApi from "../../utils/useApi";
 import Dropdown from "../admin/components/Dropdown";
 
-const UpdateProductStatus = () => {
+const getStatusIcon = (status) => {
+  switch (status.toUpperCase()) {
+    case "DELIVERED":
+      return <FaCheckCircle className="text-green-500" />;
+    case "SHIPPED":
+      return <FaTruck className="text-blue-500" />;
+    case "PENDING":
+      return <FaClock className="text-yellow-500" />;
+    default:
+      return <FaBoxOpen className="text-gray-500" />;
+  }
+};
+
+const UpdateProductStatus = ({ refreshMetrics }) => {
   const {
     fetchData,
     putData,
@@ -21,33 +33,24 @@ const UpdateProductStatus = () => {
   } = useApi(`${import.meta.env.VITE_BASE_URL}/api/orders`);
 
   const [updating, setUpdating] = useState(null);
-  const [selectedOrder, setSelectedOrder] = useState(null); // for modal
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const loadOrders = async () => {
+    await fetchData("/");
+  };
 
   useEffect(() => {
-    fetchData("/"); // fetch all orders for admin
+    loadOrders();
   }, []);
 
   const handleStatusChange = async (orderId, newStatus) => {
     setUpdating(orderId);
     const res = await putData(`/${orderId}/status`, { status: newStatus });
     if (res && res.data) {
-      // Refresh orders after update
-      await fetchData("/");
+      await loadOrders(); // refresh orders
+      refreshMetrics?.(); // refresh metrics immediately
     }
     setUpdating(null);
-  };
-
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case "DELIVERED":
-        return <FaCheckCircle className="text-green-500" />;
-      case "SHIPPED":
-        return <FaTruck className="text-blue-500" />;
-      case "PENDING":
-        return <FaClock className="text-yellow-500" />;
-      default:
-        return <FaBoxOpen className="text-gray-500" />;
-    }
   };
 
   return (
@@ -88,7 +91,13 @@ const UpdateProductStatus = () => {
                 <td className="p-3 min-w-[180px]">
                   <Dropdown
                     label=""
-                    options={["PENDING", "SHIPPED", "DELIVERED", "CANCELED"]}
+                    options={[
+                      "PENDING",
+                      "PAID",
+                      "SHIPPED",
+                      "DELIVERED",
+                      "CANCELED",
+                    ]}
                     value={order.status}
                     setValue={(val) => handleStatusChange(order.id, val)}
                     className="text-sm w-full"
