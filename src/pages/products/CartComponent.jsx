@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useCart } from "../../utils/CartContext";
 import Payment from "./Payment";
 import Address from "./Address";
-import CartList from "./cartList";
+import CartList from "./CartList";
 import StepsHeader from "./StepsHeader";
 import PriceDetails from "./PriceDetails";
 import EmptyCart from "./EmptyCart";
