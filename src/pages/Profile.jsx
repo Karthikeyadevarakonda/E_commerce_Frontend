@@ -23,11 +23,11 @@ const Profile = () => {
     loading,
     error,
     data: orders,
-  } = useApi("http://localhost:7001/api/orders");
+  } = useApi(`${import.meta.env.VITE_BASE_URL}/api/orders`);
   const [activeTab, setActiveTab] = useState("orders");
 
   useEffect(() => {
-    if (user) fetchData(`/user/${user.id}`);
+    if (user) fetchData(`/user`);
   }, [user]);
 
   const handleLogout = () => {
