@@ -13,7 +13,12 @@ const FilterSidebar = ({
   priceRange,
   setPriceRange,
 }) => {
-  const coloursAvailable = [...new Set(filteredData.map((p) => p.colour))];
+  const coloursAvailable = [
+    ...new Map(
+      filteredData.map((p) => [p.colour.toLowerCase(), p.colour])
+    ).values(),
+  ];
+
   const brandsAvailable = [...new Set(filteredData.map((p) => p.brand))];
   const categoriesAvailable = [
     ...new Set(filteredData.map((p) => p.productType)),
