@@ -27,7 +27,7 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState("orders");
 
   useEffect(() => {
-    if (user) fetchData(`/user`);
+    if (user) fetchData(`/user/${user.id}`);
   }, [user]);
 
   const handleLogout = () => {
