@@ -58,8 +58,8 @@ const Body = () => {
       </div>
 
       {/* 🔥 MAIN CONTENT */}
-      <div className="max-w-5xl text-center relative z-20 px-4">
-        <h1 className="text-[40px] sm:text-[70px] lg:text-[140px] xl:text-[150px] font-extrabold tracking-widest text-pink-300 sm:text-pink-200 uppercase leading-tight">
+      <div className="max-w-5xl text-center relative z-20 px-4 ">
+        <h1 className="text-[42px] sm:text-[70px] lg:text-[140px] xl:text-[150px] font-extrabold tracking-widest text-pink-400/60 uppercase leading-tight">
           TrendCart
         </h1>
 
@@ -79,14 +79,14 @@ const Body = () => {
           {!user ? (
             <Link
               to={"/login"}
-              className="px-8 py-3 border border-black text-black rounded-md shadow hover:bg-gray-100 transition text-sm sm:text-base"
+              className="px-8 py-3 border border-black/70 text-black rounded-md shadow hover:bg-gray-100/80 transition text-sm sm:text-base"
             >
               SIGN IN
             </Link>
           ) : user.role === "ADMIN" ? (
             <Link
               to={"/admin/metrics"}
-              className="px-8 py-3 border border-black text-black rounded-md shadow hover:bg-gray-100 transition text-sm sm:text-base"
+              className="px-8 py-3 border border-gray-400 text-black rounded-md shadow hover:bg-gray-100 transition text-sm sm:text-base"
             >
               Dashboard
             </Link>
@@ -174,7 +174,7 @@ const Body = () => {
 
       {/* 🧍‍♀️ & 🧍‍♂️ MOBILE DECOR IMAGES */}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-gray-50 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-pink-200 to-gray-50 sm:bg-gradient-to-b sm:from-pink-300 sm:via-pink-200  sm:to-gray-50 z-0"></div>
     </section>
   );
 };
