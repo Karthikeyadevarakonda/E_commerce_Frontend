@@ -79,14 +79,13 @@ const Profile = () => {
     }
   };
 
-  // 👇 Show only last 3 orders initially
   const displayedOrders = !showAllOrders && orders ? orders.slice(-3) : orders;
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 relative">
       {/* Mobile Menu Button */}
       <button
-        className="absolute top-4 left-4 z-50 md:hidden bg-white p-2 rounded-lg shadow-md"
+        className="absolute top-4 left-4 z-200 md:hidden bg-white p-2 rounded-lg shadow-md"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
         {isMenuOpen ? <FaTimes /> : <FaBars />}

@@ -11,9 +11,23 @@ import ShimmerMetrics from "./ShimmerMetrics";
 
 const COLORS = ["#60A5FA", "#34D399", "#FBBF24", "#F87171", "#A78BFA"];
 
-const KpiCard = memo(({ title, value, icon: Icon }) => (
-  <div className="sm:bg-white py-6 px-4 rounded-xl shadow-md flex items-center gap-3 hover:shadow-lg transition-transform hover:scale-[1.02] sm:py-8 sm:px-4 sm:rounded-xl">
-    <div className="p-3 rounded-full bg-slate-100 text-slate-600 text-xl">
+const ICON_STYLES = {
+  revenue:
+    "bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-md shadow-emerald-200",
+  orders:
+    "bg-gradient-to-br from-blue-400 to-indigo-500 text-white shadow-md shadow-blue-200",
+  products:
+    "bg-gradient-to-br from-yellow-400 to-orange-500 text-white shadow-md shadow-orange-200",
+  pending:
+    "bg-gradient-to-br from-pink-400 to-rose-500 text-white shadow-md shadow-rose-200",
+};
+
+// Updated KpiCard with attractive icons
+const KpiCard = memo(({ title, value, icon: Icon, variant }) => (
+  <div className="bg-white py-6 px-4 rounded-xl shadow-md flex items-center gap-4 hover:shadow-lg transition-transform hover:scale-[1.02] sm:py-8 sm:px-4 sm:rounded-xl">
+    <div
+      className={`p-4 rounded-full text-xl ${ICON_STYLES[variant]} transition-all duration-300 hover:scale-110`}
+    >
       <Icon />
     </div>
     <div>
@@ -125,27 +139,43 @@ const Metrics = ({ refreshKey }) => {
   return (
     <div className="space-y-8 sm:p-6 max-w-7xl mx-auto">
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <KpiCard
-          title="Total Revenue"
-          value={`₹${totalRevenue.toFixed(2)}`}
-          icon={FaRupeeSign}
-        />
-        <KpiCard
-          title="Total Orders"
-          value={totalOrders}
-          icon={FaShoppingCart}
-        />
-        <KpiCard
-          title="Total Products"
-          value={totalProducts}
-          icon={FaBoxOpen}
-        />
-        <KpiCard
-          title="Pending Delivery"
-          value={pendingDelivery}
-          icon={FaTruckLoading}
-        />
+      {/* KPI Cards - scrollable row on mobile */}
+      <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 overflow-x-auto sm:overflow-visible pb-3 scrollbar-hide">
+        <div className="flex-shrink-0 w-64 sm:w-auto">
+          <KpiCard
+            title="Total Revenue"
+            value={`₹${totalRevenue.toFixed(2)}`}
+            icon={FaRupeeSign}
+            variant="revenue"
+          />
+        </div>
+
+        <div className="flex-shrink-0 w-64 sm:w-auto">
+          <KpiCard
+            title="Total Orders"
+            value={totalOrders}
+            icon={FaShoppingCart}
+            variant="orders"
+          />
+        </div>
+
+        <div className="flex-shrink-0 w-64 sm:w-auto">
+          <KpiCard
+            title="Total Products"
+            value={totalProducts}
+            icon={FaBoxOpen}
+            variant="products"
+          />
+        </div>
+
+        <div className="flex-shrink-0 w-64 sm:w-auto">
+          <KpiCard
+            title="Pending Delivery"
+            value={pendingDelivery}
+            icon={FaTruckLoading}
+            variant="pending"
+          />
+        </div>
       </div>
 
       {/* Top Products Bar Chart */}
