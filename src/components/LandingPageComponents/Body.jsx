@@ -10,7 +10,7 @@ const Body = () => {
   const { user } = useAuth();
 
   return (
-    <section className="relative flex flex-col items-center bg-gradient-to-r from-pink-50 to-gray-50 overflow-hidden pt-16 sm:pt-10 lg:pt-2 2xl:pt-20 min-h-screen">
+    <section className="relative flex flex-col items-center bg-gradient-to-r from-pink-50 to-gray-50 overflow-hidden pt-16 sm:pt-10 lg:pt-2 2xl:pt-20 sm:min-h-screen">
       {/* 🌟 MOBILE BACKGROUND ANIMATIONS */}
       <div className="absolute inset-0 overflow-hidden sm:hidden z-0">
         {/* Floating gradient blobs */}
