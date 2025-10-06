@@ -59,7 +59,7 @@ const Body = () => {
 
       {/* 🔥 MAIN CONTENT */}
       <div className="max-w-5xl text-center relative z-20 px-4">
-        <h1 className="text-[40px] sm:text-[70px] lg:text-[140px] xl:text-[150px] font-extrabold tracking-widest text-pink-200 uppercase leading-tight">
+        <h1 className="text-[40px] sm:text-[70px] lg:text-[140px] xl:text-[150px] font-extrabold tracking-widest text-pink-300 sm:text-pink-200 uppercase leading-tight">
           TrendCart
         </h1>
 
@@ -99,13 +99,46 @@ const Body = () => {
             </Link>
           )}
         </div>
+
+        {/* 🧍‍♀️ & 🧍‍♂️ MOBILE DECOR IMAGES UNDER BUTTONS */}
+        <div className="flex justify-center gap-4 mt-6 lg:hidden z-10">
+          <motion.img
+            src={Lady}
+            alt="Lady"
+            className="w-32 sm:w-40 object-contain"
+            initial={{ y: 50, opacity: 0, rotate: -5 }}
+            animate={{ y: 0, opacity: 1, rotate: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              duration: 1.2,
+              delay: 0.3,
+            }}
+          />
+          <motion.img
+            src={Men}
+            alt="Men"
+            className="w-32 sm:w-40 object-contain"
+            initial={{ y: 50, opacity: 0, rotate: 5 }}
+            animate={{ y: 0, opacity: 1, rotate: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 20,
+              duration: 1.2,
+              delay: 0.5,
+            }}
+          />
+        </div>
       </div>
 
       {/* 🧥 CLOTHING SCROLL */}
       <div className="relative w-full flex justify-center mt-10 sm:mt-10 lg:mt-10 z-10 mb-6 sm:mb-0">
         <div className="relative w-[90%] sm:w-[600px] lg:w-[650px] overflow-hidden rounded-full">
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-pink-50 via-pink-50 to-transparent z-20"></div>
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-pink-50 via-pink-50 to-transparent z-20"></div>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-pink-50 via-pink-50 to-transparent z-20 hidden sm:block"></div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-pink-50 via-pink-50 to-transparent z-20 hidden sm:block"></div>
+
           <ClothingScroll />
         </div>
       </div>
@@ -138,6 +171,8 @@ const Body = () => {
           duration: 1.2,
         }}
       />
+
+      {/* 🧍‍♀️ & 🧍‍♂️ MOBILE DECOR IMAGES */}
 
       <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-gray-50 z-0"></div>
     </section>
