@@ -32,7 +32,7 @@ const CartComponent = () => {
         {currentStep !== 4 && <StepsHeader currentStep={currentStep} />}
 
         {currentStep === 1 && (
-          <div className="bg-white p-4 rounded-lg shadow space-y-4 overflow-y-auto h-[600px]">
+          <div className="bg-white p-4 rounded-lg shadow space-y-4 overflow-y-auto h-auto">
             {cart.map((item) => (
               <CartList
                 key={`${item.id}-${item.size}`}

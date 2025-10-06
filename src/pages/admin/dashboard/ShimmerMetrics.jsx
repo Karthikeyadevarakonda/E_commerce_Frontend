@@ -12,9 +12,12 @@ const ShimmerMetrics = () => {
   return (
     <div className="space-y-8 p-6 max-w-7xl mx-auto">
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Shimmer loading cards - scrollable row on mobile */}
+      <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto sm:overflow-visible pb-3 scrollbar-hide">
         {[...Array(4)].map((_, i) => (
-          <ShimmerCard key={i} />
+          <div key={i} className="flex-shrink-0 w-64 sm:w-auto">
+            <ShimmerCard />
+          </div>
         ))}
       </div>
 

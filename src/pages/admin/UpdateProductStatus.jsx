@@ -54,8 +54,10 @@ const UpdateProductStatus = ({ refreshMetrics }) => {
   };
 
   return (
-    <div className="sm:p-6 min-h-screen">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Manage Orders</h2>
+    <div className="sm:p-6  min-h-screen sm:bg-gray-50">
+      <h2 className="text-2xl font-bold text-gray-800/80 mb-6">
+        Manage Orders
+      </h2>
 
       {loading && <p>Loading orders...</p>}
       {error && <p className="text-red-500">Failed to fetch orders</p>}
@@ -63,32 +65,39 @@ const UpdateProductStatus = ({ refreshMetrics }) => {
         <p className="text-gray-500">No orders found.</p>
       )}
 
-      <div className="overflow-x-auto rounded-2xl">
-        <table className="w-full bg-white shadow-md overflow-y-auto">
-          <thead className="bg-pink-100 text-pink-600">
+      {/* Responsive Table Container */}
+      <div className="overflow-x-auto bg-white shadow-md sm:rounded-xl">
+        <table className="min-w-full text-sm sm:text-base">
+          <thead className="bg-pink-100 text-pink-600 text-left">
             <tr>
-              <th className="p-3 text-left">Order ID</th>
-              <th className="p-3 text-left">User ID</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-left">Update</th>
-              <th className="p-3 text-left">Items</th>
+              <th className="p-3 whitespace-nowrap">Order ID</th>
+              <th className="p-3 whitespace-nowrap">User ID</th>
+              <th className="p-3 whitespace-nowrap">Status</th>
+              <th className="p-3 whitespace-nowrap">Update</th>
+              <th className="p-3 whitespace-nowrap text-center">Items</th>
             </tr>
           </thead>
           <tbody>
             {(Array.isArray(orders) ? orders : []).map((order) => (
               <tr
                 key={order.id}
-                className="border-b border-gray-300 hover:bg-gray-50"
+                className="border-b border-gray-200 hover:bg-gray-50"
               >
-                <td className="p-3 font-mono text-gray-700">{order.id}</td>
-                <td className="p-3 text-gray-600">{order.userId}</td>
-                <td className="p-3 flex items-center gap-2">
-                  {getStatusIcon(order.status)}
-                  <span className="capitalize font-medium">
-                    {order.status.toLowerCase()}
-                  </span>
+                <td className="p-3 font-mono text-gray-700 whitespace-nowrap">
+                  {order.id}
                 </td>
-                <td className="p-3 min-w-[180px]">
+                <td className="p-3 text-gray-600 break-all whitespace-nowrap">
+                  {order.userId}
+                </td>
+                <td className="p-3">
+                  <div className="flex items-center gap-2">
+                    {getStatusIcon(order.status)}
+                    <span className="capitalize font-medium text-gray-700">
+                      {order.status.toLowerCase()}
+                    </span>
+                  </div>
+                </td>
+                <td className="p-3 min-w-[150px] sm:min-w-[180px]">
                   <Dropdown
                     label=""
                     options={[
@@ -106,7 +115,7 @@ const UpdateProductStatus = ({ refreshMetrics }) => {
                     <FaSyncAlt className="inline ml-2 animate-spin text-pink-500" />
                   )}
                 </td>
-                <td className="p-3">
+                <td className="p-3 text-center">
                   <button
                     onClick={() => setSelectedOrder(order)}
                     className="text-blue-500 hover:text-blue-700"
@@ -122,16 +131,18 @@ const UpdateProductStatus = ({ refreshMetrics }) => {
 
       {/* Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-md sm:max-w-lg p-5 relative overflow-hidden">
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-lg"
               onClick={() => setSelectedOrder(null)}
             >
               ✕
             </button>
-            <h3 className="text-lg font-semibold mb-4">Order Items</h3>
-            <div className="flex flex-col gap-3 max-h-80 overflow-y-auto">
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">
+              Order Items
+            </h3>
+            <div className="flex flex-col gap-3 max-h-80 overflow-y-auto pr-2">
               {selectedOrder.products.map((p) => (
                 <div
                   key={p.id}
@@ -140,15 +151,19 @@ const UpdateProductStatus = ({ refreshMetrics }) => {
                   <img
                     src={p.product?.image || "/placeholder.png"}
                     alt={p.product?.productType || "Product"}
-                    className="w-12 h-12 object-cover rounded"
+                    className="w-12 h-12 object-cover rounded-md flex-shrink-0"
                   />
-                  <div>
-                    <p className="font-medium">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium truncate">
                       {p.product?.productType || "Unknown Product"}
                     </p>
-                    <p className="text-gray-500">Quantity: {p.quantity}</p>
+                    <p className="text-gray-500 text-sm">
+                      Quantity: {p.quantity}
+                    </p>
                     {p.product?.price && (
-                      <p className="text-gray-500">Price: ${p.product.price}</p>
+                      <p className="text-gray-500 text-sm">
+                        Price: ₹{p.product.price}
+                      </p>
                     )}
                   </div>
                 </div>
