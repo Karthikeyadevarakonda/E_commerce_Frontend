@@ -76,7 +76,7 @@ const CartList = ({ item, addToCart, decreaseQuantity, removeFromCart }) => {
 
         {/* Remove Confirmation */}
         {isRemoving && (
-          <div className="mt-2 p-3 md:p-4 border rounded bg-gray-50 text-xs sm:text-sm md:text-base text-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-2 w-full">
+          <div className="mt-2 p-3 md:p-4 border rounded bg-gray-50 text-xs sm:text-sm md:text-base text-gray-800 flex flex-col gap-2 w-full">
             <span>Are you sure you want to move this item from bag?</span>
             <div className="flex gap-2">
               <button
